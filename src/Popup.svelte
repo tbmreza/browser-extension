@@ -55,6 +55,5 @@
   <label for="switch"></label>
   Image URL: <input type="text" bind:value={image} />
   <button on:click={change}>Change</button>
-  <a class="github-fork-ribbon left-top" href="" data-ribbon="text on the ribbon" title="Click to hide.">yeada</a>
 </main>
 

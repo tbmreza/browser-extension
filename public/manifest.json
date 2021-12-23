@@ -8,12 +8,13 @@
     "persistent": false
   },
   "browser_action": {
-    "default_popup": "index.html"
+    "default_popup": "popup.html"
   },
   "content_scripts": [
     {
       "matches": ["https://*/*"],
-      "js": ["build/draw.js"]
+      "css": ["build/corners.css"],
+      "js": ["build/corners.js"]
     }
   ]
 }
