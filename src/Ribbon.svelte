@@ -2,16 +2,39 @@
   export let placement
   export let hide = false
 
-  const text = ["pre-staging", "staging", "uat"][0];
+  function urlMatch(href) {
+    if (/^(?:https?:\/\/)?(?:[^.]+\.)?dmp\.loc(\/.*)?$/gmi.test(href)) {
+      return { label: "LOCALHOST", color: "darkgreen" }
+    } else if (/^(?:https?:\/\/)?(?:[^.]+\.)?mataharibiz\.com(\/.*)?$/gmi.test(href)) {
+      return { label: "STAGING", color: "chocolate" }
+    } else if (/^(?:https?:\/\/)?(?:[^.]+\.)?mbizmarket\.dev(\/.*)?$/gmi.test(href)) {
+      return { label: "PRE-STAGING", color: "chocolate" }
+    } else if (/^(?:https?:\/\/)?(?:[^.]+\.)?mbizmarket\.my\.id(\/.*)?$/gmi.test(href)) {
+      return { label: "UAT", color: "purple" }
+    } else {
+      return { label: "", color: "" }
+    }
+  }
+  
+  const ribbon = urlMatch(window.location.href);
+
   function clickRibbon() {
     hide = true
   }
 </script>
 
 <style>
-  /* .hide { */
-  /*   display: none; */
-  /* } */
+  .github-fork-ribbon.darkgreen:before {
+    background-color: darkgreen;
+  }
+
+  .github-fork-ribbon.chocolate:before {
+    background-color: chocolate;
+  }
+
+  .github-fork-ribbon.purple:before {
+    background-color: purple;
+  }
 
   /*!
    * "Fork me on GitHub" CSS ribbon v0.2.3 | MIT License
@@ -179,7 +202,5 @@
 <!-- svelte-ignore a11y-missing-content -->
 <!-- svelte-ignore a11y-missing-attribute -->
 {#if !hide}
-  <a class="github-fork-ribbon {placement}" data-ribbon={text.toUpperCase()} title="Click to hide." on:click={clickRibbon}></a>
+  <a class="github-fork-ribbon {placement} {ribbon.color}" data-ribbon={ribbon.label} title="Click to hide." on:click={clickRibbon}></a>
 {/if}
-
-<!-- TODO text based on url patterns at manifest. -->

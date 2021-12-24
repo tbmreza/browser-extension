@@ -12,7 +12,12 @@
   },
   "content_scripts": [
     {
-      "matches": ["https://*/*"],
+      "matches": [
+        "*://*.dmp.loc/*",
+        "*://*.mataharibiz.com/*",
+        "*://*.mbizmarket.dev/*",
+        "*://*.mbizmarket.my.id/*"
+      ],
       "css": ["build/corners.css"],
       "js": ["build/corners.js"]
     }
