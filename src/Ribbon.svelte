@@ -1,7 +1,6 @@
 <script>
   export let placement
   export let hide = false
-  import { displayed } from "./stores"
 	import { createEventDispatcher } from 'svelte';
 
   function urlMatch(href) {
@@ -19,17 +18,6 @@
   }
   
   const ribbon = urlMatch(window.location.href);
-
-  let displayed_val
-  displayed.subscribe(n => displayed_val = n)
-
-  function clickRibbon() {
-    if (displayed_val > 1) {
-      hide = true
-      displayed.update(n => n - 1)
-    }
-  }
-
   const dispatch = createEventDispatcher()
 </script>
 
@@ -216,7 +204,7 @@
     class="github-fork-ribbon {placement} {ribbon.color}"
     data-ribbon={ribbon.label}
     title="Click to hide."
-    on:click={clickRibbon}
+    on:click={() => dispatch("click")}
     on:contextmenu|preventDefault={() => dispatch("rightclick")}>
   </a>
 {/if}

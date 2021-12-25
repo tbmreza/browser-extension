@@ -1,9 +1,13 @@
 import { writable } from "svelte/store";
 
-// Initial value should agree with the number of falses in `bools`
-// at Corners.svelte:
-//
-// let bools = [false, true, true, true] // 1 false
-//
-// export const displayed = writable(1); // initialize to 1
-export const displayed = writable(1);
+// TODO const default_hidden_ribbons = [1, 2, 3] // only show left-top
+
+export const hidden_ribbons = writable(JSON.parse(localStorage.getItem('hidden_ribbons') || "[1, 2, 3]"))
+
+let hidden_ribbons_len = 3 // hardcode
+hidden_ribbons.subscribe(bools => {
+  hidden_ribbons_len = bools.length
+  localStorage.setItem('hidden_ribbons', JSON.stringify(bools))
+})
+
+export const displayed = writable(4 - hidden_ribbons_len);
