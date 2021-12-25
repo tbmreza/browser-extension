@@ -8,7 +8,7 @@
 
   let displayed_val
   displayed.subscribe(n => displayed_val = n)
-  // NOTE generalized function clickRibbon(i) {
+  // NOTE generalized form clickRibbon(i) {
   //   ...
   //   hideRibbon[i]
   //   ...
