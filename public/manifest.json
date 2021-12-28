@@ -1,6 +1,7 @@
 {
   "manifest_version": 2,
-  "name": "My Extension",
+  "name": "Match URL",
+  "description": "Draw ribbon to page corners.",
   "version": "1.0.0",
   "permissions": ["storage"],
   "background": {
@@ -12,12 +13,7 @@
   },
   "content_scripts": [
     {
-      "matches": [
-        "*://*.dmp.loc/*",
-        "*://*.mataharibiz.com/*",
-        "*://*.mbizmarket.dev/*",
-        "*://*.mbizmarket.my.id/*"
-      ],
+      "matches": ["<all_urls>"],
       "css": ["build/corners.css"],
       "js": ["build/corners.js"]
     }

@@ -2,22 +2,51 @@
   export let placement
   export let hide = false
 	import { createEventDispatcher } from 'svelte';
+	import { pattern_re } from './utils';
 
-  function urlMatch(href) {
-    if (/^(?:https?:\/\/)?(?:[^.]+\.)?dmp\.loc(\/.*)?$/gmi.test(href)) {
-      return { label: "LOCALHOST", color: "darkgreen" }
-    } else if (/^(?:https?:\/\/)?(?:[^.]+\.)?mataharibiz\.com(\/.*)?$/gmi.test(href)) {
-      return { label: "STAGING", color: "chocolate" }
-    } else if (/^(?:https?:\/\/)?(?:[^.]+\.)?mbizmarket\.dev(\/.*)?$/gmi.test(href)) {
-      return { label: "PRE-STAGING", color: "chocolate" }
-    } else if (/^(?:https?:\/\/)?(?:[^.]+\.)?mbizmarket\.my\.id(\/.*)?$/gmi.test(href)) {
-      return { label: "UAT", color: "purple" }
-    } else {
-      return { label: "", color: "" }
-    }
+  // NOTE
+  // "*://*.dmp.loc/*",
+  // "*://*.mataharibiz.com/*",
+  // "*://*.mbizmarket.dev/*",
+  // "*://*.mbizmarket.my.id/*"
+  // const bg_colors = ["darkgreen", "chocolate", "maroon", "purple"]
+
+  const profile = [
+    {
+      label: "LOCALHOST",
+      color: "darkgreen",
+      domains: { name: "dmp", tld: "loc" },
+    },
+    {
+      label: "STAGING",
+      color: "chocolate",
+      domains: { name: "mataharibiz", tld: "com" },
+    },
+    {
+      label: "PRE-STAGING",
+      color: "maroon",
+      domains: { name: "mbizmarket", tld: "dev" },
+    },
+    {
+      label: "UAT",
+      color: "purple",
+      domains: { name: "mbizmarket", tld: "my.id" },
+    },
+  ];
+
+  const rule = profile
+    .map((rule) => {
+      return { pattern: pattern_re(rule.domains), label: rule.label, color: rule.color };
+    })
+    .find((rule) => rule.pattern.test(window.location.href));
+
+  let ribbon = { label: "", color: "" }
+  if (rule === undefined) {
+    hide = true
+  } else {
+    ribbon = { label: rule.label, color: rule.color }
   }
-  
-  const ribbon = urlMatch(window.location.href);
+
   const dispatch = createEventDispatcher()
 </script>
 
@@ -88,7 +117,7 @@
     padding: 0.38em 0;
 
     /* Set the base colour */
-    background-color: #a00;
+    background-color: #000;
 
     /* Set a gradient: transparent black at the top to almost-transparent black at the bottom */
     background-image: -webkit-gradient(

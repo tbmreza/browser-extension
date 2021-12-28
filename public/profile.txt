@@ -1,0 +1,34 @@
+[
+  {
+    "label": "LOCALHOST",
+    "color": "darkgreen",
+    "domains": {
+      "name": "dmp",
+      "tld": "loc"
+    }
+  },
+  {
+    "label": "STAGING",
+    "color": "chocolate",
+    "domains": {
+      "name": "mataharibiz",
+      "tld": "com"
+    }
+  },
+  {
+    "label": "PRE-STAGING",
+    "color": "maroon",
+    "domains": {
+      "name": "mbizmarket",
+      "tld": "dev"
+    }
+  },
+  {
+    "label": "UAT",
+    "color": "purple",
+    "domains": {
+      "name": "mbizmarket",
+      "tld": "my.id"
+    }
+  }
+]
