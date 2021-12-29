@@ -1,3 +1,33 @@
+<script>
+  import { match_url_profile } from "./stores"
+
+  let match_url_profile_val
+  match_url_profile.subscribe(val => match_url_profile_val = val)
+
+  const profile = [
+    {
+      label: "LOCALHOST",
+      color: "darkgreen",
+      domains: { name: "dmp", tld: "loc" },
+    },
+    {
+      label: "STAGING",
+      color: "chocolate",
+      domains: { name: "mataharibiz", tld: "com" },
+    },
+    {
+      label: "PRE-STAGING",
+      color: "maroon",
+      domains: { name: "mbizmarket", tld: "dev" },
+    },
+    {
+      label: "UAT",
+      color: "purple",
+      domains: { name: "mbizmarket", tld: "my.id" },
+    },
+  ];
+</script>
+
 <h4>Recognize these URL patterns:</h4>
 <ul>
   <li>darkgreen</li>

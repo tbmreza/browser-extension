@@ -15,6 +15,8 @@ hidden_ribbons.subscribe((bools) => {
   hidden_ribbons_len = bools.length;
   localStorage.setItem("hidden_ribbons", JSON.stringify(bools));
 });
+
+export const displayed = writable(4 - hidden_ribbons_len);
 // }
 
 // localStorage.match_url_profile {
@@ -26,5 +28,3 @@ match_url_profile.subscribe((val) => {
   localStorage.setItem("match_url_profile", JSON.stringify(val));
 });
 // }
-
-export const displayed = writable(4 - hidden_ribbons_len);

@@ -13,33 +13,10 @@
   // const bg_colors = ["darkgreen", "chocolate", "maroon", "purple"]
   let match_url_profile_val
   match_url_profile.subscribe(val => match_url_profile_val = val)
-  // TODO click and rightclick interact with this store
 
   // NOTE profile DMP
   // const profile = JSON.parse("[{\"label\":\"LOCALHOST\",\"color\":\"darkgreen\",\"domains\":{\"name\":\"dmp\",\"tld\":\"loc\"}},{\"label\":\"STAGING\",\"color\":\"chocolate\",\"domains\":{\"name\":\"mataharibiz\",\"tld\":\"com\"}},{\"label\":\"PRE-STAGING\",\"color\":\"maroon\",\"domains\":{\"name\":\"mbizmarket\",\"tld\":\"dev\"}},{\"label\":\"UAT\",\"color\":\"purple\",\"domains\":{\"name\":\"mbizmarket\",\"tld\":\"my.id\"}}]")
   const profile = match_url_profile_val
-  // const profile = [
-  //   {
-  //     label: "LOCALHOST",
-  //     color: "darkgreen",
-  //     domains: { name: "dmp", tld: "loc" },
-  //   },
-  //   {
-  //     label: "STAGING",
-  //     color: "chocolate",
-  //     domains: { name: "mataharibiz", tld: "com" },
-  //   },
-  //   {
-  //     label: "PRE-STAGING",
-  //     color: "maroon",
-  //     domains: { name: "mbizmarket", tld: "dev" },
-  //   },
-  //   {
-  //     label: "UAT",
-  //     color: "purple",
-  //     domains: { name: "mbizmarket", tld: "my.id" },
-  //   },
-  // ];
 
   const rule = profile
     .map((rule) => {
