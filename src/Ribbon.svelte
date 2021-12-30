@@ -1,8 +1,8 @@
 <script>
   export let placement
   export let hide = false
+  import browser from "webextension-polyfill";
 	import { createEventDispatcher } from 'svelte';
-  import { match_url_profile } from "./stores"
 	import { pattern_re } from './utils';
 
   // NOTE
@@ -10,26 +10,36 @@
   // "*://*.mataharibiz.com/*",
   // "*://*.mbizmarket.dev/*",
   // "*://*.mbizmarket.my.id/*"
-  // const bg_colors = ["darkgreen", "chocolate", "maroon", "purple"]
-  let match_url_profile_val
-  match_url_profile.subscribe(val => match_url_profile_val = val)
 
-  // NOTE profile DMP
-  // const profile = JSON.parse("[{\"label\":\"LOCALHOST\",\"color\":\"darkgreen\",\"domains\":{\"name\":\"dmp\",\"tld\":\"loc\"}},{\"label\":\"STAGING\",\"color\":\"chocolate\",\"domains\":{\"name\":\"mataharibiz\",\"tld\":\"com\"}},{\"label\":\"PRE-STAGING\",\"color\":\"maroon\",\"domains\":{\"name\":\"mbizmarket\",\"tld\":\"dev\"}},{\"label\":\"UAT\",\"color\":\"purple\",\"domains\":{\"name\":\"mbizmarket\",\"tld\":\"my.id\"}}]")
-  const profile = match_url_profile_val
+  let promise = browser.storage.local.get("match_url_profile").then((data) => {
+    const rule = JSON.parse(data["match_url_profile"])
+      .map((rule) => {
+        return { pattern: pattern_re(rule.domains), label: rule.label, color: rule.color };
+      })
+      .find((rule) => rule.pattern.test(window.location.href));
 
-  const rule = profile
-    .map((rule) => {
-      return { pattern: pattern_re(rule.domains), label: rule.label, color: rule.color };
-    })
-    .find((rule) => rule.pattern.test(window.location.href));
+    let ribbon = { label: "", color: "" }
+    if (rule === undefined) {
+      hide = true
+    } else {
+      ribbon = { label: rule.label, color: rule.color }
+    }
+    return ribbon
+ });
 
-  let ribbon = { label: "", color: "" }
-  if (rule === undefined) {
-    hide = true
-  } else {
-    ribbon = { label: rule.label, color: rule.color }
-  }
+  // const rule = profile
+  //   .map((rule) => {
+  //     return { pattern: pattern_re(rule.domains), label: rule.label, color: rule.color };
+  //   })
+  //   .find((rule) => rule.pattern.test(window.location.href));
+  //
+  // let ribbon = { label: "", color: "" }
+  // if (rule === undefined) {
+  //   hide = true
+  // } else {
+  //   ribbon = { label: rule.label, color: rule.color }
+  // }
+  //
 
   const dispatch = createEventDispatcher()
 </script>
@@ -213,11 +223,13 @@
 <!-- svelte-ignore a11y-missing-content -->
 <!-- svelte-ignore a11y-missing-attribute -->
 {#if !hide}
-  <a
-    class="github-fork-ribbon {placement} {ribbon.color}"
-    data-ribbon={ribbon.label}
-    title="Click to hide."
-    on:click={() => dispatch("click")}
-    on:contextmenu|preventDefault={() => dispatch("rightclick")}>
-  </a>
+  {#await promise then ribbon}
+    <a
+      class="github-fork-ribbon {placement} {ribbon.color}"
+      data-ribbon={ribbon.label}
+      title="Click to hide."
+      on:click={() => dispatch("click")}
+      on:contextmenu|preventDefault={() => dispatch("rightclick")}>
+    </a>
+  {/await}
 {/if}

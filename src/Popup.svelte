@@ -1,8 +1,13 @@
 <script>
-  import { match_url_profile } from "./stores"
+  import browser from "webextension-polyfill";
 
-  let match_url_profile_val
-  match_url_profile.subscribe(val => match_url_profile_val = val)
+  // TODO input fields
+  // const bg_colors = ["darkgreen", "chocolate", "maroon", "purple"]
+
+  function save() {
+    const profile = JSON.parse("[{\"label\":\"LOCALHOST\",\"color\":\"darkgreen\",\"domains\":{\"name\":\"dmp\",\"tld\":\"loc\"}},{\"label\":\"STAGING\",\"color\":\"chocolate\",\"domains\":{\"name\":\"mataharibiz\",\"tld\":\"com\"}},{\"label\":\"PRE-STAGING\",\"color\":\"maroon\",\"domains\":{\"name\":\"mbizmarket\",\"tld\":\"dev\"}},{\"label\":\"UAT\",\"color\":\"purple\",\"domains\":{\"name\":\"mbizmarket\",\"tld\":\"my.id\"}}]");
+    browser.storage.local.set({ match_url_profile: JSON.stringify(profile) });
+  }
 
   const profile = [
     {
@@ -27,6 +32,8 @@
     },
   ];
 </script>
+
+<button on:click={save}>save</button>
 
 <h4>Recognize these URL patterns:</h4>
 <ul>

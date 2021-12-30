@@ -18,13 +18,3 @@ hidden_ribbons.subscribe((bools) => {
 
 export const displayed = writable(4 - hidden_ribbons_len);
 // }
-
-// localStorage.match_url_profile {
-export const match_url_profile = writable(
-  JSON.parse(localStorage.getItem("match_url_profile") || JSON.stringify([]))
-);
-
-match_url_profile.subscribe((val) => {
-  localStorage.setItem("match_url_profile", JSON.stringify(val));
-});
-// }
