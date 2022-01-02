@@ -25,7 +25,7 @@
       ribbon = { label: rule.label, color: rule.color }
     }
     return ribbon
- });
+  });
 
   // const rule = profile
   //   .map((rule) => {
@@ -51,6 +51,10 @@
 
   .github-fork-ribbon.chocolate:before {
     background-color: chocolate;
+  }
+
+  .github-fork-ribbon.maroon:before {
+    background-color: maroon;
   }
 
   .github-fork-ribbon.purple:before {
