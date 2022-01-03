@@ -125,51 +125,46 @@
   }
 </script>
 <style>
-  ul.profile-form {
-    list-style: none;
+  button {
+    margin-top: 8px;
   }
-  ul.profile-form li::before {
-    content: "\2588";
+  input {
+    margin-bottom: 2px;
   }
 
-  li.darkgreen::before {
-    color: darkgreen;
+  input[name="darkgreen-label"] {
+    margin-top: 8px;
+    background-color: darkgreen;
+    color: white;
   }
-  li.chocolate::before {
-    color: chocolate;
+  input[name="chocolate-label"] {
+    background-color: chocolate;
+    color: white;
   }
-  li.maroon::before {
-    color: maroon;
+  input[name="maroon-label"] {
+    background-color: maroon;
+    color: white;
   }
-  li.purple::before {
-    color: purple;
+  input[name="purple-label"] {
+    background-color: purple;
+    color: white;
   }
 </style>
 
-<h4>Recognize these URL patterns:</h4>
-<br>
-<h4>{JSON.stringify(profile)}</h4>
+<h4>Recognize these domains:</h4>
 {#await promise then profile}
   <form on:submit|preventDefault={handle_submit}>
-    <ul class="profile-form">
-      <li class="darkgreen">
-        <input type=text name="darkgreen-label" value={profile.darkgreen.label}>
-        <input type=text name="darkgreen-domains" value={from_domains(profile.darkgreen.domains)}>
-      </li>
-      <li class="chocolate">
-        <input type=text name="chocolate-label" value={profile.chocolate.label}>
-        <input type=text name="chocolate-domains" value={from_domains(profile.chocolate.domains)}>
-      </li>
-      <li class="maroon">
-        <input type=text name="maroon-label" value={profile.maroon.label}>
-        <input type=text name="maroon-domains" value={from_domains(profile.maroon.domains)}>
-      </li>
-      <li class="purple">
-        <input type=text name="purple-label" value={profile.purple.label}>
-        <input type=text name="purple-domains" value={from_domains(profile.purple.domains)}>
-      </li>
+    <ul>
+      <input type=text name="darkgreen-label" value={profile.darkgreen.label}>
+      <input type=text name="darkgreen-domains" value={from_domains(profile.darkgreen.domains)}>
+      <input type=text name="chocolate-label" value={profile.chocolate.label}>
+      <input type=text name="chocolate-domains" value={from_domains(profile.chocolate.domains)}>
+      <input type=text name="maroon-label" value={profile.maroon.label}>
+      <input type=text name="maroon-domains" value={from_domains(profile.maroon.domains)}>
+      <input type=text name="purple-label" value={profile.purple.label}>
+      <input type=text name="purple-domains" value={from_domains(profile.purple.domains)}>
+      <button type="submit">submit!!</button>
     </ul>
-    <button type="submit">submit!!</button>
   </form>
 {/await}
 <br/>
