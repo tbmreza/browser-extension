@@ -113,6 +113,12 @@
     }
   }
 
+  // TODO rename to safely_set
+  // TODO button to clear extension storage
+  function test_set(s) {
+    browser.storage.local.set({ match_url_profile: JSON.stringify(s) });
+  }
+
   function handle_submit(e) {
     const fd = new FormData(e.target);
 
@@ -120,8 +126,32 @@
     fd.forEach((v, k) => profile_form[k] = v);
 
     profile = as_profile(profile_form)
-    // TODO if valid
-    // browser.storage.local.set({ match_url_profile: JSON.stringify(as_profile(profile_form)) });
+    test_set(to_array(profile_form))
+  }
+
+  function to_array(form) {
+    return [ 
+      {
+        color: "darkgreen",
+        label: form_value(form, "darkgreen").label,
+        domains: to_domains(form_value(form, "darkgreen").domains),
+      },
+      {
+        color: "chocolate",
+        label: form_value(form, "chocolate").label,
+        domains: to_domains(form_value(form, "chocolate").domains),
+      },
+      {
+        color: "maroon",
+        label: form_value(form, "maroon").label,
+        domains: to_domains(form_value(form, "maroon").domains),
+      },
+      {
+        color: "purple",
+        label: form_value(form, "purple").label,
+        domains: to_domains(form_value(form, "purple").domains),
+      }
+    ]
   }
 </script>
 <style>
@@ -163,7 +193,7 @@
       <input type=text name="maroon-domains" value={from_domains(profile.maroon.domains)}>
       <input type=text name="purple-label" value={profile.purple.label}>
       <input type=text name="purple-domains" value={from_domains(profile.purple.domains)}>
-      <button type="submit">submit!!</button>
+      <button type="submit">save</button>
     </ul>
   </form>
 {/await}

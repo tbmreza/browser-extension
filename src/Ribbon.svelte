@@ -27,20 +27,6 @@
     return ribbon
   });
 
-  // const rule = profile
-  //   .map((rule) => {
-  //     return { pattern: pattern_re(rule.domains), label: rule.label, color: rule.color };
-  //   })
-  //   .find((rule) => rule.pattern.test(window.location.href));
-  //
-  // let ribbon = { label: "", color: "" }
-  // if (rule === undefined) {
-  //   hide = true
-  // } else {
-  //   ribbon = { label: rule.label, color: rule.color }
-  // }
-  //
-
   const dispatch = createEventDispatcher()
 </script>
 
