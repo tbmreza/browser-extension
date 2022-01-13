@@ -1,9 +1,8 @@
-<script>
-  export let placement
+<script lang="ts">
+  export let placement: string
   export let hide = false
   import browser from "webextension-polyfill";
-	import { createEventDispatcher } from 'svelte';
-	import { pattern_re } from './utils';
+  import { createEventDispatcher } from 'svelte';
 
   // NOTE
   // "*://*.dmp.loc/*",
@@ -11,12 +10,28 @@
   // "*://*.mbizmarket.dev/*",
   // "*://*.mbizmarket.my.id/*"
 
+  interface DomainParts {
+    sub?: string,
+    name: string,
+    tld: string,
+  }
+
+  interface InputRule {
+    label: string,
+    color: string,
+    domains: DomainParts,
+  }
+
+  interface Rule {
+    pattern: RegExp,
+  }
+
   let promise = browser.storage.local.get("match_url_profile").then((data) => {
     const rule = JSON.parse(data["match_url_profile"])
-      .map((rule) => {
+      .map((rule: InputRule) => {
         return { pattern: pattern_re(rule.domains), label: rule.label, color: rule.color };
       })
-      .find((rule) => rule.pattern.test(window.location.href));
+      .find((rule: Rule) => rule.pattern.test(window.location.href));
 
     let ribbon = { label: "", color: "" }
     if (rule === undefined) {
@@ -28,6 +43,12 @@
   });
 
   const dispatch = createEventDispatcher()
+
+  function pattern_re(domains: DomainParts) {
+    const { name, tld } = domains;
+    const pattern_str = `^(?:https?:\/\/)?(?:[^.]+\.)?${name}\.${tld}(\/.*)?$`;
+    return new RegExp(pattern_str, "gmi");
+  }
 </script>
 
 <style>
